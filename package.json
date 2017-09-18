@@ -1,0 +1,22 @@
+{
+  "name": "express_project",
+  "version": "1.0.0",
+  "description": "First attempt at Express.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Javascript",
+    "Express",
+    "Api"
+  ],
+  "author": "Ajayi Thadeus",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.1",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4"
+  },
+  "devDependencies": {}
+}

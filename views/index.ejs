@@ -1,0 +1,11 @@
+<% include partials/header.ejs %>
+<h1> <%= title %></h1>
+
+<ul>
+    <% fam.forEach((fam) => { %>
+        <li><%= fam.id %></li>
+        <p><%= fam.first_name %> <br> <%= fam.last_name %> <br> <%= fam.email %></p>
+    <%})%>
+</ul>
+
+<% include partials/footer.ejs %>

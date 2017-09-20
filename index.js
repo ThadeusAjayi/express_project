@@ -4,39 +4,10 @@ var path = require('path');
 var validator = require('express-validator');
 var mongojs = require('mongojs')
 var db = mongojs('familyapp', ['siblings'])
+var ObjectId = mongojs.ObjectId;
 
 var app = express();
 var fam;
-
-// app.use((req, res, next) => {
-//     console.log("Logging...");
-//     next();
-// });
-
-// var https = require('https');
-
-// let body = "";
-
-//     https.get('https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json', response => {
-
-
-//     response.on('data', data => {
-        
-//         body += data.toString();
-
-//     });
-
-//     response.on('end', () => {
-
-//         const recipe = JSON.parse(body);
-//         recipe.forEach(function(recipe){
-//             console.log(recipe.name)
-//            // return recipe.name
-//         })
-
-//     });
-
-//     });
 
 //View engine middleware
 app.set('view engine', 'ejs');
@@ -114,6 +85,16 @@ app.post('/users/add',(req,res) => {
         console.log ("Success");
     }
 
+});
+
+app.delete('/users/delete/:id', (req, res) => {
+
+    db.siblings.remove({_id: ObjectId(req.params.id)}, (err, result) => {
+        if (err) {
+            console.log(err)
+        }
+        res.redirect('/')
+    });
 })
 
 app.listen(3000,() => {

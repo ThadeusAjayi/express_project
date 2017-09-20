@@ -21,7 +21,7 @@
 <ol>
     <% fam.forEach((fam) => { %>
         <!-- <li><%= fam.id %></li> -->
-        <li><p><%= fam.first_name %> <br> <%= fam.last_name %> <br> <%= fam.email %></p></li>
+        <li><p><%= fam.first_name %> - &nbsp &nbsp <a href="" class="del" data-id="<%= fam._id %>">x</a> <br> <%= fam.last_name %> <br> <%= fam.email %></p></li>
     <%})%>
 </ol>
 

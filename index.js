@@ -2,8 +2,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var validator = require('express-validator');
+var mongojs = require('mongojs')
+var db = mongojs('familyapp', ['siblings'])
 
 var app = express();
+var fam;
 
 // app.use((req, res, next) => {
 //     console.log("Logging...");
@@ -70,31 +73,16 @@ app.use(validator({
     }
 }));
 
-var fam = [
-    {
-    id : 1,
-    first_name : "Thadeus",
-    last_name : "Ajayi",
-    email : "ainojie@gmail.com"
-    },
-    {
-        id : 2,
-        first_name : "Tabitha",
-        last_name : "Ajayi",
-        email : "ademilola@gmail.com"
-    },
-    {
-        id : 3,
-        first_name : "Matilda",
-        last_name : "Ajayi",
-        email : "matildadekemi@gmail.com"
-    }
-]
 app.get('/',(req, res) => {
-    res.render('index', {
-        title: "Family List",
-        fam: fam
-    });
+    // find everything
+    db.siblings.find().sort({first_name: 1},function (err, docs) {
+        // docs is an array of all the documents in mycollection
+        fam = docs;
+        res.render('index', {
+            title: "Family List",
+            fam: fam
+        });
+    })
 });
 
 app.post('/users/add',(req,res) => {
@@ -106,6 +94,7 @@ app.post('/users/add',(req,res) => {
     var errors = req.validationErrors();
 
     if (errors) {
+        //This is the data that is processed to the view in the render
         res.render('index', {
             title: "Family List",
             fam: fam,
@@ -117,6 +106,10 @@ app.post('/users/add',(req,res) => {
             last_name : req.body.lastName,
             email : req.body.email
         }
+
+        db.siblings.insert(newFam,(err,docs) => {
+            res.redirect('/');
+        })
 
         console.log ("Success");
     }
